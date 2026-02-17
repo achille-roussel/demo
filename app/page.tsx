@@ -1,5 +1,5 @@
 import { getAuthorsWithPostCountsN1 } from '@/lib/queries'
-import { TimingDisplay } from '@/components/TimingDisplay'
+import { PerformanceMonitor } from '@/components/PerformanceMonitor'
 import { AuthorCard } from '@/components/AuthorCard'
 
 export const dynamic = 'force-dynamic'
@@ -9,26 +9,30 @@ export default async function Home() {
   const { authors, queryCount, totalTimeMs } = await getAuthorsWithPostCountsN1()
 
   return (
-    <main className="container mx-auto px-4 py-8 max-w-4xl">
-      <header className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-100 mb-2">
-          N+1 Query Demo
-        </h1>
-        <p className="text-gray-400">
-          Watch how the N+1 query problem slows down your application
-        </p>
-      </header>
+    <>
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">
+            Discover Writers
+          </h1>
+          <p className="text-gray-400">
+            Follow your favorite authors and never miss their latest stories
+          </p>
+        </div>
 
-      <TimingDisplay
-        queryCount={queryCount}
-        totalTimeMs={totalTimeMs}
-        authorCount={authors.length}
-      />
-
-      <section>
-        <h2 className="text-2xl font-semibold text-gray-200 mb-4">
-          Authors ({authors.length})
-        </h2>
+        <div className="flex items-center gap-4 mb-6 border-b border-gray-800 pb-4">
+          <button className="text-white font-medium pb-2 border-b-2 border-indigo-500">
+            All Writers
+          </button>
+          <button className="text-gray-500 hover:text-gray-300 pb-2 border-b-2 border-transparent">
+            Featured
+          </button>
+          <button className="text-gray-500 hover:text-gray-300 pb-2 border-b-2 border-transparent">
+            New This Week
+          </button>
+          <div className="flex-1" />
+          <span className="text-sm text-gray-500">{authors.length} writers</span>
+        </div>
 
         <div className="grid gap-4">
           {authors.map((author) => (
@@ -37,14 +41,19 @@ export default async function Home() {
         </div>
 
         {authors.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            <p>No authors found. Run the seed script to populate the database.</p>
-            <code className="block mt-2 text-sm bg-gray-800 px-4 py-2 rounded">
-              npm run seed
-            </code>
+          <div className="text-center py-16">
+            <div className="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-300 mb-2">No writers yet</h3>
+            <p className="text-gray-500">Check back soon for amazing content creators</p>
           </div>
         )}
-      </section>
-    </main>
+      </main>
+
+      <PerformanceMonitor queryCount={queryCount} totalTimeMs={totalTimeMs} />
+    </>
   )
 }

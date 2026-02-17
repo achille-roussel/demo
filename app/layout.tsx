@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
+import { Header } from '@/components/Header'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'N+1 Query Demo',
-  description: 'A demonstration of the N+1 query problem',
+  title: 'Inkwell - Discover Amazing Writers',
+  description: 'Join our community of writers and readers. Discover stories that matter.',
 }
 
 export default function RootLayout({
@@ -13,7 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-900 text-gray-100 min-h-screen">
+      <body className="bg-gray-950 text-gray-100 min-h-screen">
+        <Header />
         {children}
       </body>
     </html>
