@@ -25,13 +25,6 @@ export function PerformanceMonitor({ queryCount, totalTimeMs }: PerformanceMonit
               <div className="text-xs text-gray-500">Load Time</div>
             </div>
           </div>
-          {isSlowLoad && (
-            <div className="mt-3 pt-3 border-t border-red-200">
-              <p className="text-xs text-red-600">
-                N+1 query detected: {queryCount} queries executed
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </div>
